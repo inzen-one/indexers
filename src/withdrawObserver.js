@@ -8,7 +8,7 @@ const TOPIC = '0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a1
 
 const web3 = new Web3('https://late-crimson-violet.matic.discover.quiknode.pro/da818ce3d9a6c854832472061623bd74e918afdc/');
 
-class DiscountModel {
+class WithdrawModel {
     constructor() {
         this.lastBlock = 36041830;
         this.writer = fs.createWriteStream(REPORT_FILE, { flags: "a" });
@@ -60,6 +60,9 @@ class DiscountModel {
         const burnAmount = parseInt(values[0].toString(10));
         const time = await this.getTime(log.blockNumber);
         this.writer.write(`${contractAddress},${userAddress},${burnAmount},${time}\n`);
+        if(!this.model[contractAddress+","+userAddress]){
+            this.model[contractAddress+","+userAddress] = []
+        }
         this.model[item.contractAddress + "," + item.userAddress].push({
             poolAddress : contractAddress,
             userAddress : userAddress,
@@ -92,4 +95,4 @@ class DiscountModel {
 
 }
 
-module.exports = DiscountModel;
+module.exports = WithdrawModel;

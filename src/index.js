@@ -13,13 +13,17 @@ app.use(express.json());
 app.get('/deposits', async (req, res) => {
     const poolAddress = req.params.poolAddress;
     const userAddress = req.params.userAddress;
-    return res.json(depositsModel.getAllDeposits(poolAddress + "," + userAddress));
+    const result = depositsModel.getAllDeposits(poolAddress + "," + userAddress)
+    if(!result) result = []
+    return res.json(result);
 });
 
 app.get('/withdraws', async (req, res) => {
     const poolAddress = req.params.poolAddress;
     const userAddress = req.params.userAddress;
-    return res.json(withdrawModel.getAllWithdrawal(poolAddress + "," + userAddress));
+    const result = withdrawModel.getAllWithdrawal(poolAddress + "," + userAddress)
+    if(!result) result = []
+    return res.json(result);
 });
 
 async function start(port) {
