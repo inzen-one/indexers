@@ -11,7 +11,7 @@ app.use(express.json());
 app.get('/deposits', async (req, res) => {
     let poolAddress = req.body.poolAddress;
     let userAddress = req.body.userAddress;
-    if(poolAddress && userAddress){
+    if(!poolAddress && !userAddress){
         return res.json({message: "params is valid"})
     }
     let result = depositsModel.getAllDeposits(poolAddress.toLowerCase() + "," + userAddress.toLowerCase())
@@ -22,7 +22,7 @@ app.get('/deposits', async (req, res) => {
 app.get('/withdraws', async (req, res) => {
     let poolAddress = req.body.poolAddress;
     let userAddress = req.body.userAddress;
-    if(poolAddress && userAddress){
+    if(!poolAddress && !userAddress){
         return res.json({message: "params is valid"})
     }
     let result = withdrawModel.getAllWithdrawal(poolAddress.toLowerCase() + "," + userAddress.toLowerCase())

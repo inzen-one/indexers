@@ -27,7 +27,7 @@ class WithdrawModel {
     async crawl() {
         const startMs = Date.now();
         const toBlock = await web3.eth.getBlockNumber();
-        const fromBlock = toBlock - this.lastBlock > 2000 ? toBlock - 2000 : this.lastBlock;
+        const fromBlock = this.lastBlock;
         const pastLogs = await web3.eth.getPastLogs({
             fromBlock,
             toBlock,
