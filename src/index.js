@@ -1,8 +1,6 @@
 const express = require('express');
-
 const WithdrawModel = require("./withdrawObserver");
 const DepositsModel = require("./depositsObserver");
-
 const withdrawModel = new WithdrawModel();
 const depositsModel = new DepositsModel();
 
@@ -11,17 +9,23 @@ app.use(express.json());
 
 
 app.get('/deposits', async (req, res) => {
-    const poolAddress = req.params.poolAddress;
-    const userAddress = req.params.userAddress;
-    const result = depositsModel.getAllDeposits(poolAddress + "," + userAddress)
+    let poolAddress = req.body.poolAddress;
+    let userAddress = req.body.userAddress;
+    if(poolAddress && userAddress){
+        return res.json({message: "params is valid"})
+    }
+    let result = depositsModel.getAllDeposits(poolAddress.toLowerCase() + "," + userAddress.toLowerCase())
     if(!result) result = []
     return res.json(result);
 });
 
 app.get('/withdraws', async (req, res) => {
-    const poolAddress = req.params.poolAddress;
-    const userAddress = req.params.userAddress;
-    const result = withdrawModel.getAllWithdrawal(poolAddress + "," + userAddress)
+    let poolAddress = req.body.poolAddress;
+    let userAddress = req.body.userAddress;
+    if(poolAddress && userAddress){
+        return res.json({message: "params is valid"})
+    }
+    let result = withdrawModel.getAllWithdrawal(poolAddress.toLowerCase() + "," + userAddress.toLowerCase())
     if(!result) result = []
     return res.json(result);
 });
